@@ -35,7 +35,7 @@ fun max(m: Int, n: Int) = if (m > n) m else n
 ----
 fun quadraticRootNumber(a: Double, b: Double, c: Double): Int {
     // Применяем готовую функцию из первой части
-    val d = discriminant(a, b, c)
+    val d = lesson1.task1.discriminant(a, b, c)
     // Для сравнения на равенство применяем ==
     return if (d > 0.0) 2 else if (d == 0.0) 1 else 0
 }
@@ -78,7 +78,7 @@ fun quadraticRootNumber(a: Double, b: Double, c: Double): Int {
 ----
 fun quadraticRootNumber(a: Double, b: Double, c: Double): Int {
     // Применяем готовую функцию из первой части
-    val d = discriminant(a, b, c)
+    val d = lesson1.task1.discriminant(a, b, c)
     // Для сравнения на равенство применяем ==
     return when {
         d > 0.0  -> 2
@@ -137,10 +137,10 @@ fun gradeNotation(grade: Int): String = when (grade) {
 [source,kotlin]
 ----
 fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
-        sqr(x - x0) + sqr(y - y0) <= sqr(r)
+        lesson1.task1.sqr(x - x0) + lesson1.task1.sqr(y - y0) <= lesson1.task1.sqr(r)
 ----
 
-Здесь вновь используется функция `sqr` из урока 1 для вычисления квадратов чисел.
+Здесь вновь используется функция `lesson1.task1.sqr` из урока 1 для вычисления квадратов чисел.
 Тип результата функции `pointInsideCircle` -- `Boolean`.
 При написании тестовых функций для неё удобно использовать готовые функции `assertTrue` и `assertFalse`, например:
 
@@ -217,7 +217,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
         return -sqrt(bc)
         // Дальше функция при a == 0.0 не идёт
     }
-    val d = discriminant(a, b, c)   // 2
+    val d = lesson1.task1.discriminant(a, b, c)   // 2
     if (d < 0.0) return Double.NaN  // 3
     // 4
     val y1 = (-b + sqrt(d)) / (2 * a)
@@ -243,7 +243,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
 чему же должно быть равно значение `x`, что приведёт к ошибке:
 
 ```
-'if' must have both main and 'else' branches if used as an expression.
+'if' must have both lesson1.task1.main and 'else' branches if used as an expression.
 ```
 
 В переводе с английского --

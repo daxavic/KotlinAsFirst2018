@@ -11,7 +11,7 @@ __Классы__ придуманы программистами в первую
 
 [source,kotlin]
 ----
-fun distance(x1: Double, y1: Double, x2: Double, y2: Double) = sqrt(sqr(x2 - x1) + sqr(y2 - y1))
+fun distance(x1: Double, y1: Double, x2: Double, y2: Double) = sqrt(lesson1.task1.sqr(x2 - x1) + lesson1.task1.sqr(y2 - y1))
 ----
 
 Сразу же бросается в глаза, что в условии задачи мы говорили о двух точках, 
@@ -31,7 +31,7 @@ fun distance(p1: Point, p2: Point) = ...
 ----
 class Point(val x: Double, val y: Double)
 
-fun distance(p1: Point, p2: Point) = sqrt(sqr(p2.x - p1.x) + sqr(p2.y - p1.y))
+fun distance(p1: Point, p2: Point) = sqrt(lesson1.task1.sqr(p2.x - p1.x) + lesson1.task1.sqr(p2.y - p1.y))
 ----
 
 Строчка `class Point(...)` определяет новый __класс__.
@@ -83,7 +83,7 @@ fun usePoints() {
 [source,kotlin]
 ----
 class Point(val x: Double, val y: Double) {
-    fun distance(other: Point): Double = sqrt(sqr(x - other.x) + sqr(y - other.y))
+    fun distance(other: Point): Double = sqrt(lesson1.task1.sqr(x - other.x) + lesson1.task1.sqr(y - other.y))
 }
 ----
 
@@ -126,7 +126,7 @@ class Square(val column: Int, val row: Int)
 
 [source,kotlin]
 ----
-fun main(args: Array<String>) {
+fun lesson1.task1.main(args: Array<String>) {
     val first = Square(3, 6)
     val second = Square(3, 6)
     println(first == second)
@@ -157,7 +157,7 @@ data class Square(val column: Int, val row: Int)
 
 [source,kotlin]
 ----
-fun main(args: Array<String>) {
+fun lesson1.task1.main(args: Array<String>) {
     val first = Square(3, 6)
     println(first)
 }
@@ -217,7 +217,7 @@ data class Segment(val begin: Point, val end: Point) {
 
 [source,kotlin]
 ----
-fun main(args: Array<String>) {
+fun lesson1.task1.main(args: Array<String>) {
     val t = Triangle(Point(0.0, 0.0), Point(3.0, 0.0), Point(0.0, 4.0))
     println(t.b.x) // 3.0
 }
@@ -344,12 +344,12 @@ fun useTimeStrToSeconds() {
     val mm = triple.second
     val ss = triple.third
     // или: деструктурирование
-    val (hours, minutes, seconds) = timeStrToSeconds("11:34:45")
+    val (hours, minutes, lesson1.task1.seconds) = timeStrToSeconds("11:34:45")
 }
 ----
 
 __Деструктурирование__ в последней строчке функции позволяет выполнить разбиение тройки на отдельные компоненты,
-создавая три переменных `hours`, `minutes`, `seconds`.
+создавая три переменных `hours`, `minutes`, `lesson1.task1.seconds`.
 Та же операция доступна для любого другого класса с данными (data class).
 Другой пример его использования:
 

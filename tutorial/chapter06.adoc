@@ -209,7 +209,7 @@ fun timeStrToSeconds(str: String): Int {
  1. Проверим, может ли функция `foo` обработать исключение. Если да -- управление передаётся её блоку **catch**.
  1. В противном случае, перейдём к функции `bar`, которая до этого вызвала функцию `foo`. Проверим, может ли она обработать исключение. Если да -- управление передаётся её блоку **catch**.
  1. В противном случае, перейдём у функции `baz`, которая до этого вызвала функцию `bar`. Проверим то же самое для неё.
- 1. И так далее. Если в итоге мы дошли до самого верхнего уровня (например, функции `main`), и ни одна из функций на нашем пути не может обработать исключение -- выполнение программы прерывается. В консоли при этом появится сообщение о произошедшем исключении и стек вызовов функций в момент его появления.
+ 1. И так далее. Если в итоге мы дошли до самого верхнего уровня (например, функции `lesson1.task1.main`), и ни одна из функций на нашем пути не может обработать исключение -- выполнение программы прерывается. В консоли при этом появится сообщение о произошедшем исключении и стек вызовов функций в момент его появления.
 
 Выполнение блока **catch** после передачи управления ему происходит обычным образом.
 В нашем случае он содержит один оператор `return -1`, который формирует результат функции,
@@ -252,10 +252,10 @@ fun twoDigitStr(n: Int) = if (n in 0..9) "0$n" else "$n"
 
 [source,kotlin]
 ----
-fun timeSecondsToStr(seconds: Int): String {
-    val hour = seconds / 3600
-    val minute = (seconds % 3600) / 60
-    val second = seconds % 60
+fun timeSecondsToStr(lesson1.task1.seconds: Int): String {
+    val hour = lesson1.task1.seconds / 3600
+    val minute = (lesson1.task1.seconds % 3600) / 60
+    val second = lesson1.task1.seconds % 60
     return "${twoDigitStr(hour)}:${twoDigitStr(minute)}:${twoDigitStr(second)}"
 }
 ----
@@ -271,10 +271,10 @@ fun timeSecondsToStr(seconds: Int): String {
 
 [source,kotlin]
 ----
-fun timeSecondsToStr(seconds: Int): String {
-    val hour = seconds / 3600
-    val minute = (seconds % 3600) / 60
-    val second = seconds % 60
+fun timeSecondsToStr(lesson1.task1.seconds: Int): String {
+    val hour = lesson1.task1.seconds / 3600
+    val minute = (lesson1.task1.seconds % 3600) / 60
+    val second = lesson1.task1.seconds % 60
     return String.format("%02d:%02d:%02d", hour, minute, second)
 }
 ----
@@ -331,16 +331,16 @@ fun timeSecondsToStr(seconds: Int): String {
 
 [source,kotlin]
 ----
-fun main(args: Array<String>) {
+fun lesson1.task1.main(args: Array<String>) {
     println("Введите время в формате ЧЧ:ММ:СС")
     val line = readLine()
     if (line != null) {
-        val seconds = timeStrToSeconds(line)
-        if (seconds == -1) {
+        val lesson1.task1.seconds = timeStrToSeconds(line)
+        if (lesson1.task1.seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
         }
         else {
-            println("Прошло секунд с начала суток: $seconds")
+            println("Прошло секунд с начала суток: $lesson1.task1.seconds")
         }
     }
     else {
@@ -367,7 +367,7 @@ fun main(args: Array<String>) {
 Убедитесь в том, что можете решать такие задачи уверенно и без посторонней помощи.
 По возможности решите одну из задач, помеченных как "Сложная".
 
-Попробуйте написать функцию `main`, осуществляющую консольный ввод входных данных для вашей задачи
+Попробуйте написать функцию `lesson1.task1.main`, осуществляющую консольный ввод входных данных для вашей задачи
 (хорошо подходит в тех случаях, когда параметром функции является строка),
 с последующим выводом на консоль результатов, попробуйте поиграть с получившейся программой в консоли.
 

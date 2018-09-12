@@ -28,7 +28,7 @@ fun biRoots(a: Double, b: Double, c: Double): List<Double> {
         val root = sqrt(bc)
         return if (root == 0.0) listOf(root) else listOf(-root, root)
     }
-    val d = discriminant(a, b, c)
+    val d = lesson1.task1.discriminant(a, b, c)
     if (d < 0.0) return listOf()
     val y1 = (-b + sqrt(d)) / (2 * a)
     val y2 = (-b - sqrt(d)) / (2 * a)
@@ -118,7 +118,7 @@ fun biRoots(a: Double, b: Double, c: Double): List<Double> {
         return if (b == 0.0) listOf()
         else sqRoots(-c / b)
     }
-    val d = discriminant(a, b, c)
+    val d = lesson1.task1.discriminant(a, b, c)
     if (d < 0.0) return listOf()
     if (d == 0.0) return sqRoots(-b / (2 * a))
     val y1 = (-b + sqrt(d)) / (2 * a)

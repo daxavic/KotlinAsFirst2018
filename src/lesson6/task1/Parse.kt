@@ -29,7 +29,7 @@ fun twoDigitStr(n: Int) = if (n in 0..9) "0$n" else "$n"
 /**
  * Пример
  *
- * Дано seconds -- время в секундах, прошедшее с начала дня.
+ * Дано lesson1.task1.seconds -- время в секундах, прошедшее с начала дня.
  * Вернуть текущее время в виде строки в формате "ЧЧ:ММ:СС".
  */
 fun timeSecondsToStr(seconds: Int): String {
