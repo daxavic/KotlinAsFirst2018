@@ -66,9 +66,11 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    if (age % 10 == 1 && age % 100 != 11) return "$age год"
-    else if (age % 10 in 2..4 && age % 100 !in 12..14) return "$age года"
-    else return "$age лет"
+    return when {
+        age % 10 == 1 && age % 100 != 11 -> "$age год"
+        age % 10 in 2..4 && age % 100 !in 12..14 -> "$age года"
+        else -> "$age лет"
+    }
 }
 
 
@@ -82,14 +84,16 @@ fun ageDescription(age: Int): String {
 fun timeForHalfWay(t1: Double, v1: Double,
                    t2: Double, v2: Double,
                    t3: Double, v3: Double): Double {
-    var halfS = ((v1 * t1 + v2 * t2 + v3 * t3) / 2)  // половина пути
-    if (t1 * v1 >= halfS) return (halfS / v1)
-    else
-        if (t1 * v1 + t2 * v2 >= halfS) return (t1 + (halfS - t1 * v1) / v2)
-        else
-            return (t1 + t2 + (halfS - v1 * t1 - v2 * t2) / v3)
+    val halfS = (v1 * t1 + v2 * t2 + v3 * t3) / 2  // половина пути
 
+    return when {
+        t1 * v1 >= halfS -> (halfS / v1)
+        t1 * v1 + t2 * v2 >= halfS -> t1 + (halfS - t1 * v1) / v2
+        else -> t1 + t2 + (halfS - v1 * t1 - v2 * t2) / v3
+    }
 }
+
+
 
 
 /**
@@ -138,17 +142,15 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-
-    if (a > b + c || b > a + c || c > a + b) return (-1)
-    else
-        if ((a * a + b * b - c * c) / (2 * a * b) * (c * c + b * b - a * a) / (2 * c * b) * (a * a + c * c - b * b) /
-                (2 * a * c) > 0) return 0
-        else
-            if ((a * a + b * b - c * c) / (2 * a * b) * (c * c + b * b - a * a) / (2 * c * b) * (a * a + c * c - b * b) /
-                    (2 * a * c) < 0) return 2
-            else return 1
+    val n= (a * a + b * b - c * c)  * (c * c + b * b - a * a)  * (a * a + c * c - b * b)
+    return when {
+        (a > b + c || b > a + c || c > a + b) -> -1
+        (n > 0) -> 0
+        (n < 0) -> 2
+        else -> 1
+    }
 }
-    /*
+/*
      * Средняя
      *
      * Даны четыре точки на одной прямой: A, B, C и D.
@@ -157,11 +159,11 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
      * Если пересечения нет, вернуть -1.
      */
 
-    fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-        if (b < c || d < a)
-            return (-1)
-        if (a < c) return if (b < d) abs(b - c)
-        else abs(d - c)
-        else return if (d < b) (abs(d - a))
-        else (abs(b - d))
-    }
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
+    if (b < c || d < a)
+        return -1
+    if (a < c) return if (b < d) b - c
+    else abs(d - c)
+    else return if (d < b) d - a
+    else b - a
+}
