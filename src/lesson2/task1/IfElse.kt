@@ -142,7 +142,7 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    val n= (a * a + b * b - c * c)  * (c * c + b * b - a * a)  * (a * a + c * c - b * b)
+    val n = (a * a + b * b - c * c)  * (c * c + b * b - a * a)  * (a * a + c * c - b * b)
     return when {
         (a > b + c || b > a + c || c > a + b) -> -1
         (n > 0) -> 0
@@ -150,20 +150,18 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
         else -> 1
     }
 }
-/*
-     * Средняя
-     *
-     * Даны четыре точки на одной прямой: A, B, C и D.
-     * Координаты точек a, b, c, d соответственно, b >= a, d >= c.
-     * Найти длину пересечения отрезков AB и CD.
-     * Если пересечения нет, вернуть -1.
-     */
+/** Средняя
+ *
+ * Даны четыре точки на одной прямой: A, B, C и D.
+ * Координаты точек a, b, c, d соответственно, b >= a, d >= c.
+ * Найти длину пересечения отрезков AB и CD.
+ * Если пересечения нет, вернуть -1.
+ */
 
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int{
-    if (b < c || d < a)
-        return -1
-    if (a < c) return if (b < d) b - c
-    else abs(d - c)
-    else return if (d < b) d - a
-    else b - a
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    if (b < c || d < a) return -1
+    return if (a < c) if (b < d) b - c
+                      else abs(d - c)
+    else if (d < b) d - a
+         else b - a
 }
