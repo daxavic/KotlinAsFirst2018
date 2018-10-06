@@ -48,7 +48,6 @@ fun daysInMonth(month: Int, year: Int): Int {
         else -> 31
     }
 }
-
 /**
  * Средняя
  *

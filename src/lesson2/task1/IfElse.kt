@@ -58,7 +58,6 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
     if (y3 < 0.0) return Double.NaN // 6
     return -sqrt(y3)           // 7
 }
-
 /**
  * Простая
  *
