@@ -5,6 +5,7 @@ package lesson3.task1
 import lesson1.task1.sqr
 import java.lang.Math.abs
 import java.lang.Math.pow
+import kotlin.math.PI
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -73,8 +74,8 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var digitNumber = 0
-    var number = n
+    var digitNumber = 1
+    var number = n / 10
     while (number > 0) {
         number /= 10
         digitNumber += 1
@@ -205,19 +206,18 @@ fun collatzSteps(x: Int): Int {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double {
-    var sinX = x
-    var x1 = x
-    var n = 1
-    var count = 1
-    while (abs(x1) >= eps) {
-        n += 2
-        count *= -1
-        x1 = count * pow(x, n.toDouble()) / factorial(n)
-        sinX += x1
+    val x1 = x % (2 * PI)
+    var end = x1
+    var num = x1
+    var i = 1.0
+    while (true) {
+        num = -num * sqr(x1) / (i + 1) / (i + 2)
+        if (abs(num) < eps) break
+        end += num
+        i += 2
     }
-    return sinX
+    return end
 }
-
 
 /**
  * Средняя
@@ -227,17 +227,17 @@ fun sin(x: Double, eps: Double): Double {
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun cos(x: Double, eps: Double): Double {
-    var cosX = 0.0
-    var x1 = 0.0
-    var n = 0
-    var count = 1
-    do {
-        x1 = count * pow(x, n.toDouble()) / factorial(n)
-        cosX += x1
-        n += 2
-        count *= -1
-    } while (abs(x1) >= eps)
-    return cosX
+    val x1 = x % (2 * PI)
+    var end = 1.0
+    var num = 1.0
+    var i = 0.0
+    while (true) {
+        num = -num * sqr(x1) / (i + 1) / (i + 2)
+        if (abs(num) < eps) break
+        end += num
+        i += 2
+    }
+    return end
 }
 
 /**
