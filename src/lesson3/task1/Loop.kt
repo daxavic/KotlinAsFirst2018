@@ -1,4 +1,4 @@
-@file:Suppress("UNUSED_PARAMETER")
+@file:Suppress("UNUSED_PARAMETER", "NAME_SHADOWING")
 
 package lesson3.task1
 
@@ -76,9 +76,9 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
     var digitNumber = 1
     var number = n / 10
-    while (number > 0) {
+    while (abs(number) > 0) {
         number /= 10
-        digitNumber += 1
+        digitNumber++
     }
     return digitNumber
 }
@@ -89,8 +89,19 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = if (n <= 2) 1
-else fib(n - 2) + fib(n - 1)
+fun fib(n: Int): Int {
+    var f1 = 1
+    var f2 = 1
+    var k = 1
+    var n1 = n
+    while (n1 > 2) {
+        k = f2
+        f2 += f1
+        f1 = k
+        n1--
+    }
+    return f2
+}
 
 /**
  * Простая
@@ -99,13 +110,14 @@ else fib(n - 2) + fib(n - 1)
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var divider = 1
-    val min = min(m, n)
-    for (i in 1..min / 2) {
-        if (m % i == 0 && n % i == 0) divider *= i
+    val k = m * n
+    var m1 = m
+    var n1 = n
+    while (m1 != 0 && n1 != 0) {
+        if (m1 > n1) m1 %= n1
+        else n1 %= m1
     }
-    if (max(m, n) % min == 0) divider *= min
-    return m * n / divider
+    return k / (m1 + n1)
 }
 
 /**
@@ -130,16 +142,7 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    var maxDivisor = 1
-    for (i in n - 1 downTo 2) {
-        if (n % i == 0) {
-            maxDivisor = i
-            break
-        }
-    }
-    return maxDivisor
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
 
 /**
  * Простая
@@ -164,8 +167,8 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    var m1 = (sqrt(m.toDouble())).toInt()
-    var n1 = (sqrt(n.toDouble())).toInt()
+    val m1 = (sqrt(m.toDouble())).toInt()
+    val n1 = (sqrt(n.toDouble())).toInt()
     if (m1 * m1 == m || m1 != n1) return true
     return false
 }
@@ -191,9 +194,9 @@ fun collatzSteps(x: Int): Int {
     var count = 0
     while (x1 != 1) {
         count++
-        if (x1 % 2 == 0) x1 = x1 / 2
+        x1 = if (x1 % 2 == 0) x1 / 2
         else
-            x1 = 3 * x1 + 1
+            3 * x1 + 1
     }
     return count
 }
@@ -269,23 +272,8 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    var count = 0
-    var m = n
-    var k = 1
-    while (m > 0) {
-        count++
-        m /= 10
-        k *= 10
-    }
-    m = n
-    k /= 10
-    while (count > 1) {
-        if (m % 10 != m / k) return false
-        m = (m % k) / 10
-        count -= 2
-        k /= 100
-    }
-    return true
+    if (n == revert(n)) return true
+    return false
 }
 
 /**
@@ -297,6 +285,7 @@ fun isPalindrome(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
+    if (n / 10 == 0) return false
     var x1 = n % 10
     var x2 = (n / 10) % 10
     var k = n / 100
@@ -319,6 +308,16 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
+fun numberDelete(n: Int, count: Int): Int {
+    var n = n
+    var count = count
+    while (count < 0) {
+        count++
+        n /= 10
+    }
+    return n
+}
+
 fun squareSequenceDigit(n: Int): Int {
     var count = n
     var x = 0
@@ -331,11 +330,7 @@ fun squareSequenceDigit(n: Int): Int {
             xSqr /= 10
         }
     }
-    xSqr = sqr(x)
-    while (count < 0) {
-        count++
-        xSqr /= 10
-    }
+    xSqr = numberDelete(sqr(x), count)
     return xSqr % 10
 }
 
@@ -365,9 +360,6 @@ fun fibSequenceDigit(n: Int): Int {
         }
         k2 = k + k1
     }
-    while (count < 0 ) {
-        count++
-        k2 /= 10
-    }
+    k2 = numberDelete(k2, count)
     return k2 % 10
 }
