@@ -269,7 +269,7 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     var n1 = n
-    var result: String = ""
+    var result = ""
     val digit = listOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g",
             "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
     if (n == 0) result = "0"
@@ -345,4 +345,39 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian1(n: Int, units: List<String>): String {
+    var n1 = n
+    var result = ""
+    val interval11to19 = listOf(" одиннадцать", " двенадцать", " тринадцать", " четырнадцать", " пятнадцать",
+            " шестнадцать", " семнадцать", " восемнадцать", " девятнадцать")
+    val tens = listOf(" десять", " двадцать", " тридцать", " сорок", " пятьдесят", " шестьдесят",
+            " семьдесят", " восемьдесят", " девяносто")
+    val hundreds = listOf(" сто", " двести", " триста", " четыреста", " пятьсот", " шестьсот", " семьсот",
+            " восемьсот", " девятьсот")
+    if ((n1 % 100) / 10 == 1 && n1 % 10 != 0) result = interval11to19[n1 % 10 - 1]
+    else {
+        if (n1 % 10 != 0) result = units[n1 % 10 - 1]
+        if ((n1 % 100) / 10 != 0) result = tens[(n1 % 100) / 10 - 1] + result
+    }
+    n1 /= 100
+    if (n1 % 10 != 0) result = hundreds[n1 % 10 - 1] + result
+    return result
+}
+
+fun russian(n: Int): String {
+    val units = mutableListOf(" один", " два", " три", " четыре", " пять", " шесть", " семь",
+            " восемь", " девять")
+    var result = russian1(n, units)
+    val n1 = n / 1000
+    if (n1 != 0) {
+        result = when {
+            n1 % 10 == 1 && n1 % 100 != 11 -> " тысяча$result"
+            n1 % 10 in 2..4 && n1 % 100 !in 12..14 -> " тысячи$result"
+            else -> " тысяч$result"
+        }
+        units[0] = " одна"
+        units[1] = " две"
+        result = russian1(n1, units) + result
+    }
+    return result.trim()
+}
