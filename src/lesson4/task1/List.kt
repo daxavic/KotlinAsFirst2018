@@ -2,6 +2,7 @@
 
 package lesson4.task1
 
+import com.sun.deploy.net.MessageHeader.merge
 import lesson1.task1.discriminant
 import lesson1.task1.sqr
 import lesson3.task1.minDivisor
@@ -118,16 +119,7 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double =
-        if (v.isEmpty()) 0.0
-        else {
-            var sum = 0.0
-            for (element in v) {
-
-                sum += sqr(element)
-            }
-            sqrt(sum)
-        }
+fun abs(v: List<Double>): Double = sqrt(v.sumByDouble { it * it })
 
 
 /**
@@ -163,15 +155,7 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = ba11 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.0.
  */
-fun times(a: List<Double>, b: List<Double>): Double {
-    var c = 0.0
-    if (a.isNotEmpty() || b.isNotEmpty())
-
-        for (i in 0 until a.size) {
-            c += a[i] * b[i]
-        }
-    return c
-}
+fun times(a: List<Double>, b: List<Double>): Double = a.zip(b) { it1, it2 -> it1 * it2 }.sum()
 
 /**
  * Средняя
@@ -181,14 +165,8 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0.0 при любом x.
  */
-fun polynom(p: List<Double>, x: Double): Double {
-    var result = 0.0
-    if (p.isNotEmpty())
-        for (i in 0 until p.size) {
-            result += p[i] * pow(x, i.toDouble())
-        }
-    return result
-}
+fun polynom(p: List<Double>, x: Double): Double =
+        p.foldIndexed(0.0) { index, total, next -> total + next * pow(x, index.toDouble()) }
 
 /**
  * Средняя
@@ -267,19 +245,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String {
-    var n1 = n
-    var result = ""
-    val digit = listOf("0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f", "g",
-            "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
-    if (n == 0) result = "0"
-    else
-        while (n1 > 0) {
-            result = digit[n1 % base] + result
-            n1 /= base
-        }
-    return result
-}
+fun convertToString(n: Int, base: Int): String = convert(n,base).joinToString(separator = "") { it.toString(36) }
 
 /**
  * Средняя
@@ -307,14 +273,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int {
-    val list = mutableListOf<Int>()
-    val digits = "0123456789abcdefghijklmnopqrstuvwxyz"
-    for (i in str) {
-        list.add(digits.indexOf(i))
-    }
-    return decimal(list, base)
-}
+fun decimalFromString(str: String, base: Int): Int = str.toInt(base)
 
 /**
  * Сложная
