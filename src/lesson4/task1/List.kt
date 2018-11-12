@@ -180,10 +180,8 @@ fun polynom(p: List<Double>, x: Double): Double =
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
     if (list.isNotEmpty()) {
-        var n = 0.0
-        for (i in 0 until list.size) {
-            list[i] += n
-            n = list[i]
+        for (i in 1 until list.size) {
+            list[i] += list[i - 1]
         }
     }
     return list
@@ -245,7 +243,12 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String = convert(n,base).joinToString(separator = "") { it.toString(36) }
+fun convertToString(n: Int, base: Int): String = convert(n, base).joinToString(
+        separator = "",
+        transform = {
+            if (it > 9) ('a' + it - 10).toString()
+            else "$it"
+        })
 
 /**
  * Средняя
@@ -273,7 +276,10 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: str = "13c", base = 14 -> 250
  */
-fun decimalFromString(str: String, base: Int): Int = str.toInt(base)
+fun decimalFromString(str: String, base: Int): Int = decimal(str.map {
+    if (it >= 'a') (it - 'a' + 10)
+    else it - '0'
+}, base)
 
 /**
  * Сложная
