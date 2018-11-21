@@ -119,8 +119,8 @@ fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<S
 fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val result = mutableMapOf<Int, List<String>>()
     for ((key, value) in grades) {
-        val list = result[value] ?: emptyList<String>()
-        result[value] = (list + key).sortedDescending()
+        val list = result[value] ?: emptyList()
+        result[value] = (list + key)
     }
     return result
 }
@@ -172,17 +172,9 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
-    val stuff1 = mutableMapOf<Double, String>()
-    val prize = mutableSetOf<Double>()
-    for ((key, value) in stuff) {
-        if (value.first == kind) {
-            stuff1 += value.second to key
-            prize += value.second
-        }
-    }
-    return stuff1[prize.min()]
-}
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? =
+        stuff.filter { it.value.first == kind }.minBy { it.value.second }?.key
+
 
 /**
  * Сложная
@@ -252,7 +244,7 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().int
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
 fun canBuildFrom(chars: List<Char>, word: String): Boolean =
-        word.toLowerCase().toSet().all { chars.joinToString(separator = "").toLowerCase().contains(it) }
+        word.toLowerCase().toSet().all { it -> chars.map { it.toLowerCase() }.contains(it) }
 
 /**
  * Средняя
@@ -266,14 +258,7 @@ fun canBuildFrom(chars: List<Char>, word: String): Boolean =
  * Например:
  *   extractRepeats(listOf("a", "b", "a")) -> mapOf("a" to 2)
  */
-fun extractRepeats(list: List<String>): Map<String, Int> {
-    var repeat = mapOf<String, Int>()
-    val set = list.toSet()
-    for (element in set) {
-        if (list.count { it == element } > 1) repeat += element to list.count { it == element }
-    }
-    return repeat
-}
+fun extractRepeats(list: List<String>): Map<String, Int> = list.groupingBy { it }.eachCount().filter { it.value > 1 }
 
 /**
  * Средняя
