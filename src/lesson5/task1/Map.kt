@@ -151,10 +151,10 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     val result = mutableMapOf<String, Double>()
     val prices = mutableMapOf<String, MutableList<Double>>()
     stockPrices.forEach { prices.getOrPut(it.first) { mutableListOf() }.add(it.second) }
-    for ((key, value) in prices){
-        result.getOrPut(key){ mean(value)}
+    for ((key, value) in prices) {
+        result.getOrPut(key) { mean(value) }
     }
-return result
+    return result
 }
 
 /**
@@ -310,7 +310,17 @@ fun hasAnagrams(words: List<String>): Boolean {
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    val number1 = mutableMapOf<Int, Int>() // pair (число, индекс числа)
+    var result: Pair<Int, Int> = - 1 to - 1
+    for (i in 0 until list.size) {
+        if (number1[number - list[i]] != null) {
+            result = number1[number - list[i]] !! to i
+            break
+        } else number1 += list[i] to i
+    }
+    return result
+}
 
 /**
  * Очень сложная
