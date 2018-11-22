@@ -120,7 +120,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> {
     val result = mutableMapOf<Int, List<String>>()
     for ((key, value) in grades) {
         val list = result[value] ?: emptyList()
-        result[value] = (list + key).sortedDescending()
+        result[value] = (list + key)
     }
     return result
 }
