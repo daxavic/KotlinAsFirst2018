@@ -139,11 +139,9 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     try {
-
-
-        if (! Regex("""[\d-%\s]+""").matches(jumps)) return - 1
-        val onlyJumps = jumps.replace(Regex("""[-%]+"""), "")
-        val list = onlyJumps.split(Regex("""[\s]+"""))
+        if (! Regex("""[\d\-%\s]+""").matches(jumps)) return - 1
+        val list =
+                Regex("""[-%]+""").replace(jumps, "").trim().split(Regex("""\s+""")).toList()
         var max = - 1
         for (elem in list)
             max = maxOf(max, elem.toInt())
@@ -183,7 +181,7 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    if (! Regex("""\d+(\s[+-]\s\d+)+|\d+""").matches(expression)) throw IllegalArgumentException()
+    if (! Regex("""\d+(\s+[+-]\s+\d+)+|\d+""").matches(expression)) throw IllegalArgumentException()
     val list = expression.split(" ")
     var result = list.first().toInt()
     for (i in 1 until list.size - 1 step 2)
@@ -202,7 +200,16 @@ fun plusMinus(expression: String): Int {
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    val list = str.toLowerCase().split(" ")
+    var length: Int = 0
+    var result = - 1
+    for (i in 0 until list.size - 1) {
+        if (list[i] == list[i + 1]) result = length
+        else length += list[i].length + 1
+    }
+    return result
+}
 
 /**
  * Сложная
@@ -215,7 +222,15 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    if (description == "") return description
+    val list = description.split(" ", "; ")
+    var result = "" to - 1.0
+    for (i in 0 until list.size step 2) {
+        if (list[i + 1].toDouble() > result.second) result = list[i] to list[i + 1].toDouble()
+    }
+    return result.first
+}
 
 /**
  * Сложная
