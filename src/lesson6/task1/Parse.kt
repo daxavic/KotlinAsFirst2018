@@ -106,7 +106,7 @@ fun dateDigitToStr(digital: String): String {
             "сентября", "октября", "ноября", "декабря")
     val month = list[digital1[1].toInt() - 1]
     if (date.toInt() !in 1..daysInMonth(digital1[1].toInt(), year.toInt())) return ""
-    return String.format("%s %s.%s", date, month, year)
+    return String.format("%s %s %s", date, month, year)
 }
 
 /**
@@ -138,13 +138,19 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    if (! Regex("""[\d-%\s]+""").matches(jumps)) return - 1
-    val onlyJumps = jumps.replace(Regex("""[-%]+"""), "")
-    val list = onlyJumps.split(Regex("""[\s]+"""))
-    var max = - 1
-    for (elem in list)
-        max = maxOf(max, elem.toInt())
-    return max
+    try {
+
+
+        if (! Regex("""[\d-%\s]+""").matches(jumps)) return - 1
+        val onlyJumps = jumps.replace(Regex("""[-%]+"""), "")
+        val list = onlyJumps.split(Regex("""[\s]+"""))
+        var max = - 1
+        for (elem in list)
+            max = maxOf(max, elem.toInt())
+        return max
+    } catch (e: Exception) {
+        return - 1
+    }
 }
 
 /**
@@ -159,7 +165,7 @@ fun bestLongJump(jumps: String): Int {
  */
 fun bestHighJump(jumps: String): Int {
     if (! Regex("""[\d-%+\s]+""").matches(jumps)) return - 1
-    var max = -1
+    var max = - 1
     val list = jumps.split(" ")
     for (i in 0 until list.size step 2)
         if (list[i + 1].contains("+")) max = maxOf(max, list[i].toInt())
@@ -186,6 +192,7 @@ fun plusMinus(expression: String): Int {
     return result
 
 }
+
 /**
  * Сложная
  *
