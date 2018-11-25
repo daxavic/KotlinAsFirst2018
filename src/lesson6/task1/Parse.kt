@@ -47,6 +47,8 @@ fun timeSecondsToStr(seconds: Int): String {
  * Пример: консольный ввод
  */
 fun main(args: Array<String>) {
+    println("2 2 D - r s B D ` 9 \\ S y \\ / s m h u & ) ( w / p } \" y + u # ~ \" ) i < > G ( r ' & r t g c b y @ n d g J Q x X n d g J Q x X ! 9 , - 5 P 6 e & t F 6 ; F O E S + } c ) T X n > @ ^ ! .".toLowerCase().split(" "))
+    println(firstDuplicateIndex("2 2 D - r s B D ` 9 \\ S y \\ / s m h u & ) ( w / p } \" y + u # ~ \" ) i < > G ( r ' & r t g c b y @ n d g J Q x X n d g J Q x X ! 9 , - 5 P 6 e & t F 6 ; F O E S + } c ) T X n > @ ^ ! ."))
     println("Введите время в формате ЧЧ:ММ:СС")
     val line = readLine()
     if (line != null) {
@@ -203,12 +205,11 @@ fun plusMinus(expression: String): Int {
 fun firstDuplicateIndex(str: String): Int {
     val list = str.toLowerCase().split(" ")
     var length: Int = 0
-    var result = -1
     for (i in 0 until list.size - 1) {
-        if (list[i] == list[i + 1]) result = length
+        if (list[i] == list[i + 1]) return length
         else length += list[i].length + 1
     }
-    return result
+    return -1
 }
 
 /**
