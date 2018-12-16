@@ -154,6 +154,7 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
     for ((key, value) in prices) {
         result.getOrPut(key) { mean(value) }
     }
+    println(result)
     return result
 }
 
@@ -243,8 +244,10 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = a.toSet().int
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean =
-        word.toLowerCase().toSet().all { it -> chars.map { it.toLowerCase() }.contains(it) }
+fun canBuildFrom(chars: List<Char>, word: String): Boolean {
+    val chars1 = chars.toSet().map { it.toLowerCase() }
+    return word.toLowerCase().all { chars1.contains(it) }
+}
 
 /**
  * Средняя
@@ -297,7 +300,7 @@ fun hasAnagrams(words: List<String>): Boolean {
  */
 fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
     val number1 = mutableMapOf<Int, Int>() // pair (число, индекс числа)
-    var result: Pair<Int, Int> = -1 to -1
+    var result: Pair<Int, Int> = - 1 to - 1
     for (i in 0 until list.size) {
         if (number1[number - list[i]] != null) {
             result = number1[number - list[i]] !! to i
@@ -327,3 +330,5 @@ fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
  *   ) -> emptySet()
  */
 fun bagPacking(treasures: Map<String, Pair<Int, Int>>, capacity: Int): Set<String> = TODO()
+
+

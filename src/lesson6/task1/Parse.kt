@@ -76,7 +76,7 @@ fun main(args: Array<String>) {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    if (! Regex("\\d{1,2} [а-я]+ \\d+").matches(str)) return ""
+    if (! Regex("""\d{1,2} [а-я]+ \d+""").matches(str)) return ""
     val str1 = str.split(" ")
     val date = str1.first().toInt()
     val year = str1.last().toInt()
@@ -99,7 +99,7 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    if (! Regex("\\d{2}\\.\\d{2}\\.\\d+").matches(digital)) return ""
+    if (! Regex("""\d{2}\.\d{2}\.\d+""").matches(digital)) return ""
     val digital1 = digital.split(".")
     val date = digital1.first().toInt()
     val year = digital1.last().toInt()
@@ -124,9 +124,9 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    val number = phone.replace(Regex("""[-()\s]"""), "")
-    return if (! Regex("""\+?(\d+\(\d+\)\d+|\d+)""").matches(number)) ""
-    else number
+    val number = phone.replace(Regex("""[-\s]"""), "")
+    return if (! Regex("""((\+\d+)?\(\d+\)\d+|\+?\d+)""").matches(number)) ""
+    else number.replace(Regex("""[()]"""), "")
 }
 
 /**
@@ -140,17 +140,16 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    try {
-        if (! Regex("""[\d\-%\s]+""").matches(jumps)) return - 1
-        val list =
-                Regex("""[-%]+""").replace(jumps, "").trim().split(Regex("""\s+""")).toList()
-        var max = - 1
-        for (elem in list)
-            max = maxOf(max, elem.toInt())
-        return max
-    } catch (e: Exception) {
-        return - 1
-    }
+    if (! Regex("""[\d\-%\s]+""").matches(jumps)) return - 1
+    val list =
+            Regex("""[-%]+""").replace(jumps, "").trim()
+    if (list == "") return - 1
+    val list1 = list.split(Regex("""\s+"""))
+    var max = - 1
+    for (elem in list1)
+        max = maxOf(max, elem.toInt())
+    return max
+
 }
 
 /**
@@ -209,7 +208,7 @@ fun firstDuplicateIndex(str: String): Int {
         if (list[i] == list[i + 1]) return length
         else length += list[i].length + 1
     }
-    return -1
+    return - 1
 }
 
 /**
@@ -224,7 +223,8 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть больше либо равны нуля.
  */
 fun mostExpensive(description: String): String {
-    if (description == "") return description
+    if (! Regex("""([А-ЯЁ][а-яё]+\s\d+\.\d+;\s|[А-ЯЁ][а-яё]+\s\d+;\s)+""").matches("$description; "))
+        return ""
     val list = description.split(" ", "; ")
     var result = "" to - 1.0
     for (i in 0 until list.size step 2) {
