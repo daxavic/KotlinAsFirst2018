@@ -2,6 +2,7 @@
 
 package lesson7.task1
 
+import kotlinx.html.ARel.index
 import java.io.File
 
 /**
@@ -55,17 +56,21 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  */
 fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
     val result = mutableMapOf<String, Int>()
+    val m = File(inputName).readText().toLowerCase()
     for (string in substrings) {
         var n = 0
-        for (line in File(inputName).readLines()) {
-            val i = line.toLowerCase().split(string.toLowerCase())
-            n += i.size - 1
+        var position = 0
+        var ind = 0
+        while (ind != - 1) {
+            ind = m.indexOf(string.toLowerCase(), position)
+            if (ind != - 1) {
+                position = ind + 1
+                n ++
+            }
         }
         result += string to n
     }
     return result
-
-
 }
 
 
@@ -83,8 +88,9 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    val outputStream = File(inputName).bufferedWriter()
+    TODO()
 }
+
 
 /**
  * Средняя
