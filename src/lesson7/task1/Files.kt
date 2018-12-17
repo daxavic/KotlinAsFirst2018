@@ -57,8 +57,12 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
     val result = mutableMapOf<String, Int>()
     val m = File(inputName).readText()
     for (string in substrings) {
-        val i = m.toLowerCase().split(string.toLowerCase())
-        result += string to i.size - 1
+        var n = 0
+        for (line in File(inputName).readLines()) {
+            val i = line.toLowerCase().split(string.toLowerCase())
+            n += i.size - 1
+        }
+        result += string to n
     }
     return result
 
@@ -80,7 +84,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val outputStream = File(inputName).bufferedWriter()
 }
 
 /**
